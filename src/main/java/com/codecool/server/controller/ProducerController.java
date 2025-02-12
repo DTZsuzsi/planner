@@ -2,7 +2,6 @@ package com.codecool.server.controller;
 
 import com.codecool.server.service.RabbitMQ.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
