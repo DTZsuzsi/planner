@@ -23,4 +23,36 @@ public UserService(UserRepository userRepository, UserMapper userMapper) {
 public List<UserDTO> getAllUsers() {
     return userRepository.findAll().stream().map(userMapper::userEntityToUserDTO).collect(Collectors.toList());
 }
+
+public UserDTO getUserById(long id) {
+    return userRepository.findById(id).map(userMapper::userEntityToUserDTO).orElse(null);
+}
+
+public long createUser(UserDTO userDTO) {
+    UserEntity userEntity = userMapper.userDTOToUserEntity(userDTO);
+    return userRepository.save(userEntity).getId();
+}
+
+public long modifyUser(UserDTO userDTO) {
+    UserEntity userEntity = userRepository.findById(userDTO.id()).orElse(null);
+    if (userEntity != null) {
+        userEntity.setEmail(userDTO.email());
+        userEntity.setPassword(userDTO.password());
+        userEntity.setFirstName(userDTO.firstName());
+        userEntity.setLastName(userDTO.lastName());
+        userEntity.setUsername(userDTO.username());
+        return userRepository.save(userEntity).getId();
+
+    }
+    return 0;
+}
+
+public boolean deleteUser(long id) {
+    UserEntity userEntity = userRepository.findById(id).orElse(null);
+    if (userEntity != null) {
+        userRepository.delete(userEntity);
+        return true;
+    }
+ return false;
+}
 }
