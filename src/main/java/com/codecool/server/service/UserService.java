@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 private final UserRepository userRepository;
-private final UserMapper userMapper;
+private final UserMapper userMapper=UserMapper.INSTANCE;
 
 @Autowired
-public UserService(UserRepository userRepository, UserMapper userMapper) {
+public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.userMapper = userMapper;
+
 }
 public List<UserDTO> getAllUsers() {
     return userRepository.findAll().stream().map(userMapper::userEntityToUserDTO).collect(Collectors.toList());
